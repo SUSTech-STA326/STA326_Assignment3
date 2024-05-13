@@ -1,0 +1,52 @@
+Range of userId is [0, 6039]
+Range of itemId is [0, 3705]
+Embedding(6040, 8)
+Embedding(3706, 8)
+Linear(in_features=8, out_features=1, bias=True)
+Embedding(6040, 8)
+Embedding(3706, 8)
+Linear(in_features=16, out_features=64, bias=True)
+Linear(in_features=64, out_features=32, bias=True)
+Linear(in_features=32, out_features=16, bias=True)
+Linear(in_features=16, out_features=8, bias=True)
+Linear(in_features=8, out_features=1, bias=True)
+MLP(
+  (embedding_user): Embedding(6040, 8)
+  (embedding_item): Embedding(3706, 8)
+  (fc_layers): ModuleList(
+    (0): Linear(in_features=16, out_features=64, bias=True)
+    (1): Linear(in_features=64, out_features=32, bias=True)
+    (2): Linear(in_features=32, out_features=16, bias=True)
+    (3): Linear(in_features=16, out_features=8, bias=True)
+  )
+  (affine_output): Linear(in_features=8, out_features=1, bias=True)
+  (logistic): Sigmoid()
+)
+Embedding(6040, 8)
+Embedding(3706, 8)
+Embedding(6040, 8)
+Embedding(3706, 8)
+Linear(in_features=16, out_features=64, bias=True)
+Linear(in_features=64, out_features=32, bias=True)
+Linear(in_features=32, out_features=16, bias=True)
+Linear(in_features=16, out_features=8, bias=True)
+Linear(in_features=16, out_features=1, bias=True)
+NeuMF(
+  (embedding_user_mlp): Embedding(6040, 8)
+  (embedding_item_mlp): Embedding(3706, 8)
+  (embedding_user_mf): Embedding(6040, 8)
+  (embedding_item_mf): Embedding(3706, 8)
+  (fc_layers): ModuleList(
+    (0): Linear(in_features=16, out_features=64, bias=True)
+    (1): Linear(in_features=64, out_features=32, bias=True)
+    (2): Linear(in_features=32, out_features=16, bias=True)
+    (3): Linear(in_features=16, out_features=8, bias=True)
+  )
+  (affine_output): Linear(in_features=16, out_features=1, bias=True)
+  (logistic): Sigmoid()
+)
+Traceback (most recent call last):
+  File "/data/lab/STA326_Assignment3/src/train.py", line 121, in <module>
+    for epoch in range(config['num_epoch']):
+                       ^^^^^^
+NameError: name 'config' is not defined
