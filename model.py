@@ -52,8 +52,8 @@ class RecommenderModel(nn.Module):
                     vector = self.linear_mlp0(vector)
             elif self.model_type == 'NeuMF':
                 ################# for gmf
-                user_embedding_gmf = self.embedding_user(user_indices.long())
-                item_embedding_gmf = self.embedding_item(item_indices.long())
+                user_embedding_gmf = self.embedding_user(user_indices)
+                item_embedding_gmf = self.embedding_item(item_indices)
                 gmf_vector = torch.mul(user_embedding_gmf, item_embedding_gmf)
 
                 #################  for mlp

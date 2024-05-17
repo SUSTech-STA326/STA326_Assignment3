@@ -1,6 +1,7 @@
 from torch.utils.data import Dataset
 import scipy.sparse as sp
 import random
+import pickle
 import numpy as np
 
 class RatingDataset(Dataset):
@@ -41,6 +42,9 @@ class RatingDataset(Dataset):
         return user_id, item_id, labels
 
 def load_rating_file_as_sparse(filename):
+    '''
+    for train_rating file
+    '''
     num_users, num_items = 0, 0
     with open(filename, "r") as f:
         for line in f:
@@ -62,6 +66,9 @@ def load_rating_file_as_sparse(filename):
     return mat.tocsr(), num_users, num_items
 
 def load_negative_file(filename):
+    '''
+    for test_negative file
+    '''
     negativeList = []
     with open(filename, "r") as f:
         line = f.readline()
@@ -74,7 +81,19 @@ def load_negative_file(filename):
             line = f.readline()
     return negativeList
 
-import pickle
+def load_rating_file_as_list(filename):
+    '''
+    for test_rating file
+    '''
+    ratingList = []
+    with open(filename, "r") as f:
+        line = f.readline()
+        while line != None and line != "":
+            arr = line.split("\t")
+            user, item = int(arr[0]), int(arr[1])
+            ratingList.append([user, item])
+            line = f.readline()
+    return ratingList
 
 def save_preprocessed_data(filename, data):
     with open(filename, 'wb') as f:
