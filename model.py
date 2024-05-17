@@ -4,8 +4,7 @@ import torch.nn as nn
 class RecommenderModel(nn.Module):
     def __init__(self, config):
         super(RecommenderModel, self).__init__()
-        self.config = config
-        self.X = config["layers_num(X)"]
+        self.X = config['layers_num(X)']
         self.model_type = config['model_type']
 
         self.embedding_user = torch.nn.Embedding(num_embeddings=config['num_users'], embedding_dim=config['latent_dim'])
@@ -14,17 +13,22 @@ class RecommenderModel(nn.Module):
         if self.model_type == "GMF":
             self.linear_gmf = torch.nn.Linear(in_features=config['latent_dim'], out_features=1, bias = False)
         else:
-            ### the mlp part is necessary for `NeuMF` and `MLP` model
-            if self.config["layers_num(X)"] != 0:
+            ### the mlp part is necessary for both `NeuMF` and `MLP` model
+            if config["layers_num(X)"] != 0:
                 self.fc_layers = torch.nn.ModuleList()
-                for idx, (in_size, out_size) in enumerate(zip(self.config['layers'][:-1], self.config['layers'][1:])):
+                for idx, (in_size, out_size) in enumerate(zip(config['layers'][:-1], config['layers'][1:])):
                     self.fc_layers.append(torch.nn.Linear(in_size, out_size,bias = True))
+            else:
+                self.linear_mlp0 = torch.nn.Linear(in_features=config['latent_dim']*2, out_features=1, bias = False)
 
-            if self.model_type == "MLP":
-                self.linear_mlp = torch.nn.Linear(in_features=self.config['layers'][-1], out_features=1, bias = False)
-                self.linear_mlp0 = torch.nn.Linear(in_features=self.config['latent_dim']*2, out_features=1, bias = False)
-            elif self.model_type == "NeuMF":
-                self.linear_neumf = torch.nn.Linear(in_features=self.config['latent_dim']*2+self.X, out_features=1,bias = False)
+            if self.model_type == "MLP" and config["layers_num(X)"] != 0:
+                self.linear_mlp = torch.nn.Linear(in_features=config['layers'][-1], out_features=1, bias = False)
+
+            if self.model_type == "NeuMF":
+                self.linear_neumf = torch.nn.Linear(in_features=config['latent_dim']+config['layers'][-1], out_features=1,bias = False)
+        
+        # self.dropout_mf = torch.nn.Dropout(p=config['dropout'])
+        # self.dropout_mlp = torch.nn.Dropout(p=config['dropout'])
         self.relu = torch.nn.ReLU()
         self.sigmoid = torch.nn.Sigmoid()
 
@@ -61,9 +65,9 @@ class RecommenderModel(nn.Module):
                 for fc_layer in self.fc_layers:
                     mlp_vector = fc_layer(mlp_vector)
                     mlp_vector = self.relu(mlp_vector)
-                mlp_vector = self.linear_mlp(mlp_vector)
 
                 #################  concat mf and mlp vector
+                # print(gmf_vector.size(), mlp_vector.size())
                 vector = torch.cat([gmf_vector, mlp_vector], dim=-1)
                 vector = self.linear_neumf(vector)
 

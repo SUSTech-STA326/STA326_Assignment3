@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from evaluate import *
 
 
-def model_train(config, num_of_negatives=4, preprocessed_filepath = "preprocessed_data/ml.pkl", batch_size=256, num_of_epochs=30, seed=2024):
+def model_train(config, num_of_negatives=4, preprocessed_filepath = "preprocessed_data/ml.pkl", batch_size=256, num_of_epochs=20, seed=2024):
     ####* set seed and device
     seed_everything(seed)
     device = (
@@ -24,22 +24,22 @@ def model_train(config, num_of_negatives=4, preprocessed_filepath = "preprocesse
 
     ####* init dataset and dataloader
     rating_mat, num_of_user, num_of_item, negative_sample_list, testing_ratings_list = init_train_data(preprocessed_filepath)
-
+    # print("after init",num_of_user, num_of_item)
     train_dataset = RatingDataset(rating_mat, negative_sample_list, num_of_user, num_of_item, num_of_negatives)
     train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
     ####* set model, loss, and optimizer
-    config['num_users'] = num_of_user,
-    config['num_items'] = num_of_item,
-    # print(config)
+    config['num_users'] = num_of_user
+    config['num_items'] = num_of_item
+    print("config of model: \n",config)
     model = RecommenderModel(config)
     model = model.to(device)
     criterion = nn.BCELoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
     best_hr, best_ndcg, best_epoch = 0, 0, 0
-    ####* train model
 
+    ####* train model
     for epoch in tqdm(range(num_of_epochs)):
         model.train()
         for user, item, label in train_dataloader:
@@ -53,15 +53,15 @@ def model_train(config, num_of_negatives=4, preprocessed_filepath = "preprocesse
         #### evaluate
         with torch.no_grad():
             model.eval()
-            hits, ndcgs = evaluate_model(model, testing_ratings_list, negative_sample_list, 10, num_thread=1)
+            hits, ndcgs = evaluate_model(model, testing_ratings_list, negative_sample_list, 10, num_thread=1,device = device)
             hr = np.mean(hits)
             ndcg = np.mean(ndcgs)
 
         # Update best HR and NDCG
         if hr > best_hr:
             best_hr, best_ndcg, best_epoch = hr, ndcg, epoch
-            torch.save(model.state_dict(), f"best_model{config['model_type']}(factor-{config['latent_dim']},X-{config['layers_num(X)']}).pth")
-        print(f'Epoch {epoch+1}, Loss: {loss.item()}, Hit Ratio: {hr:.4f}, NDCG: {ndcg:.4f}')
+            torch.save(model.state_dict(), f"bestmodel/best_model_{config['model_type']}(factor-{config['latent_dim']},X-{config['layers_num(X)']}).pth")
+        print(f'Epoch {epoch+1}, Loss: {loss.item():.4f}, Hit Ratio: {hr:.4f}, NDCG: {ndcg:.4f}')
 
     print(f'Best HR: {best_hr}, Best NDCG: {best_ndcg} at Epoch {best_epoch}')
 

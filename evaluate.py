@@ -5,7 +5,7 @@ import torch
 import multiprocessing
 from tqdm import tqdm
 
-def evaluate_model(model, test_ratings, test_negatives, K, num_thread):
+def evaluate_model(model, test_ratings, test_negatives, K, num_thread,device):
     """
     Evaluate the performance (Hit_Ratio, NDCG) of top-K recommendation.
     Return: scores of each test rating.
@@ -14,10 +14,12 @@ def evaluate_model(model, test_ratings, test_negatives, K, num_thread):
     global _testRatings
     global _testNegatives
     global _K
+    global _device
     _model = model
     _testRatings = test_ratings
     _testNegatives = test_negatives
     _K = K
+    _device = device
 
     hits, ndcgs = [], []
     if num_thread > 1:  # Multi-thread
@@ -43,8 +45,8 @@ def eval_one_rating(idx):
     
     # Get prediction scores
     users = np.full(len(items), u, dtype='int32')
-    users = torch.tensor(users).to(_model.device)
-    items = torch.tensor(items).to(_model.device)
+    users = torch.tensor(users).to(_device)
+    items = torch.tensor(items).to(_device)
 
     _model.eval()
     with torch.no_grad():
