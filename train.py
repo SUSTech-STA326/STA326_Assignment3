@@ -60,7 +60,7 @@ def model_train(config, num_of_negatives=4, preprocessed_filepath = "preprocesse
         # Update best HR and NDCG
         if hr > best_hr:
             best_hr, best_ndcg, best_epoch = hr, ndcg, epoch
-            torch.save(model.state_dict(), f"bestmodel/best_model_{config['model_type']}(factor-{config['latent_dim']},X-{config['layers_num(X)']}).pth")
+            # torch.save(model.state_dict(), f"bestmodel/best_model_{config['model_type']}(factor-{config['latent_dim']},X-{config['layers_num(X)']}).pth")
         print(f'Epoch {epoch+1}, Loss: {loss.item():.4f}, Hit Ratio: {hr:.4f}, NDCG: {ndcg:.4f}')
 
     print(f'Best HR: {best_hr}, Best NDCG: {best_ndcg} at Epoch {best_epoch}')
