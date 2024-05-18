@@ -42,18 +42,22 @@ def model_train(config, num_of_negatives=4, preprocessed_filepath = "preprocesse
     ####* train model
     for epoch in tqdm(range(num_of_epochs)):
         model.train()
+        running_loss = 0.0
         for user, item, label in train_dataloader:
             optimizer.zero_grad()
             user,item,label = user.to(device), item.to(device), label.float().to(device)
+            # label = label.unsqueeze(1)
             output = model(user, item)
             loss = criterion(output, label)
+            running_loss = running_loss + loss.item()
             loss.backward()
             optimizer.step()
 
         #### evaluate
         with torch.no_grad():
             model.eval()
-            hits, ndcgs = evaluate_model(model, testing_ratings_list, negative_sample_list, 10, num_thread=1,device = device)
+            K = 10
+            hits, ndcgs = evaluate_model(model, testing_ratings_list, negative_sample_list, K, num_thread=1,device = device)
             hr = np.mean(hits)
             ndcg = np.mean(ndcgs)
 
@@ -61,7 +65,7 @@ def model_train(config, num_of_negatives=4, preprocessed_filepath = "preprocesse
         if hr > best_hr:
             best_hr, best_ndcg, best_epoch = hr, ndcg, epoch
             # torch.save(model.state_dict(), f"bestmodel/best_model_{config['model_type']}(factor-{config['latent_dim']},X-{config['layers_num(X)']}).pth")
-        print(f'Epoch {epoch+1}, Loss: {loss.item():.4f}, Hit Ratio: {hr:.4f}, NDCG: {ndcg:.4f}')
+        print(f'Epoch {epoch+1}, Loss: {running_loss/len(train_dataset):.4f}, HR@{K}: {hr:.4f}, NDCG@{K}: {ndcg:.4f}')
 
     print(f'Best HR: {best_hr}, Best NDCG: {best_ndcg} at Epoch {best_epoch}')
 
