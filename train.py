@@ -25,7 +25,7 @@ def model_train(config, num_of_negatives=4, preprocessed_filepath = "preprocesse
     ####* init dataset and dataloader
     rating_mat, num_of_user, num_of_item, negative_sample_list, testing_ratings_list = init_train_data(preprocessed_filepath)
     # print("after init",num_of_user, num_of_item)
-    train_dataset = RatingDataset(rating_mat, negative_sample_list, num_of_user, num_of_item, num_of_negatives)
+    train_dataset = RatingDataset(rating_mat, num_of_user, num_of_item, num_of_negatives)
     train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
     ####* set model, loss, and optimizer
@@ -64,7 +64,7 @@ def model_train(config, num_of_negatives=4, preprocessed_filepath = "preprocesse
         # Update best HR and NDCG
         if hr > best_hr:
             best_hr, best_ndcg, best_epoch = hr, ndcg, epoch
-            # torch.save(model.state_dict(), f"bestmodel/best_model_{config['model_type']}(factor-{config['latent_dim']},X-{config['layers_num(X)']}).pth")
+            torch.save(model.state_dict(), f"bestmodel/best_model_{config['model_mark']}).pth")
         print(f'Epoch {epoch+1}, Loss: {running_loss/len(train_dataset):.4f}, HR@{K}: {hr:.4f}, NDCG@{K}: {ndcg:.4f}')
 
     print(f'Best HR: {best_hr}, Best NDCG: {best_ndcg} at Epoch {best_epoch}')
@@ -92,7 +92,8 @@ def init_train_data(preprocessed_file_path, rating_file_path = "Data/ml-1m.train
             rating_mat, num_of_user, num_of_item, negative_sample_list, testing_ratings_list = pickle.load(f)
     else:
         print(f"Preprocessing data beginning...")
-        rating_mat, num_of_user, num_of_item = load_rating_file_as_sparse(rating_file_path)
+        rating_mat = load_rating_file_as_sparse(rating_file_path)
+        num_of_user, num_of_item = rating_mat.shape
         negative_sample_list = load_negative_file(negative_file_path)
         testing_ratings_list = load_rating_file_as_list(testing_file_path)
         print(f"Preprocessing finished and saving to {preprocessed_file_path}.")

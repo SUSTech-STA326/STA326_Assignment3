@@ -78,25 +78,3 @@ class RecommenderModel(nn.Module):
         output = self.sigmoid(vector)
         return output.squeeze(1)
         # return output
-
-# class RecommenderModel(nn.Module):
-#   def __init__(self, config):
-#     super(RecommenderModel,self).__init__()
-#     self.config = config
-#     self._num_users = config['num_users']
-#     self._num_items = config['num_items']
-#     self._factor = config['embedding_dim_mf']
-#     self._embedding_size_gmf = self._factor
-#     self._embedding__user_gmf = nn.Embedding(self._num_users, self._embedding_size_gmf)
-#     self._embedding__item_gmf = nn.Embedding(self._num_items, self._embedding_size_gmf)
-#     self._out_fc = nn.Linear(self._factor, 1, bias=False)
-#     self._activate1 = nn.Sigmoid()
-    
-
-#   def forward(self, user_idx, item_idx):
-#     user_embedding = self._embedding__user_gmf(user_idx)
-#     item_embedding = self._embedding__item_gmf(item_idx)
-#     pointwise_vector = torch.mul(user_embedding, item_embedding)
-#     logit = self._out_fc(pointwise_vector)
-#     prob = self._activate1(logit)
-#     return prob.squeeze(1)
