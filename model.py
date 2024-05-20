@@ -19,7 +19,7 @@ class RecommenderModel(nn.Module):
             if config["mlp_layers(X)"] != 0:
                 self.fc_layers = torch.nn.ModuleList()
                 for idx, (in_size, out_size) in enumerate(zip(config['mlp_layers'][:-1], config['mlp_layers'][1:])):
-                    self.fc_layers.append(torch.nn.Linear(in_size, out_size,bias = True))
+                    self.fc_layers.append(torch.nn.Linear(in_size, out_size, bias = True))
             else:
                 self.linear_mlp0 = torch.nn.Linear(in_features=(config['mlp_layers'][0]), out_features=1, bias = False)
 

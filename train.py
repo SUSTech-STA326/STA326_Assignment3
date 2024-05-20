@@ -28,16 +28,21 @@ def model_train(config, num_of_negatives=4, preprocessed_filepath = "preprocesse
     train_dataset = RatingDataset(rating_mat, num_of_user, num_of_item, num_of_negatives)
     train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
+    print("-" * 60)
+
     ####* set model, loss, and optimizer
     config['num_users'] = num_of_user
     config['num_items'] = num_of_item
     print("config of model: \n",config)
     model = RecommenderModel(config)
+    print(model)
     model = model.to(device)
     criterion = nn.BCELoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
     best_hr, best_ndcg, best_epoch = 0, 0, 0
+
+    print("-" * 60)
 
     ####* train model
     for epoch in tqdm(range(num_of_epochs)):
