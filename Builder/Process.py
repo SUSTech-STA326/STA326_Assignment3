@@ -45,17 +45,18 @@ def evaluate(model, test_loader, negative_loader, top_k=10):
 
         # Predict the scores for these items
         # print("user_ids shape is:",user_ids.shape)#user_ids shape is: torch.Size([256, 100])
-        # print("items shpe is:",items.shape)#user_ids shape is: torch.Size([256, 100])
+        # print("items shape is:",items.shape)#user_ids shape is: torch.Size([256, 100])
         user_ids = user_ids.reshape(-1)
         item_ids = items.reshape(-1)
         # print("user_ids shape is:",user_ids.shape)#user_ids shape is: torch.Size([25600])
-        # print("items shpe is:",item_ids.shape)#user_ids shape is: torch.Size([25600])
+        # print("items shape is:",item_ids.shape)#user_ids shape is: torch.Size([25600])
         predictions = model(user_ids, item_ids).squeeze()
         # print("predictions shape is:",predictions.shape)#predictions shape is: torch.Size([25600])
         # Get the index of the highest scored items
         predictions = predictions.reshape(-1, 100)  # 重新变回256*100
         # predictions中每一行的第一个probability是正样本的概率，后面的是负样本的概率
-        # print("predictions shape after reshape again is:",predictions.shape)#predictions shape is: torch.Size([256, 100]
+        # print("predictions shape after reshape again is:",predictions.shape)
+        # predictions shape is: torch.Size([256, 100]
         _, indices = torch.topk(predictions, k=top_k, dim=1)
         # print(indices.shape)#256*10
         recommended_items = items.gather(1, indices)  # Gather the top-k recommended item_ids
@@ -79,7 +80,7 @@ def evaluate(model, test_loader, negative_loader, top_k=10):
     return mean_HR, mean_NDCG
 
 
-def draw(results):
+def draw(results, path):
     fig, axes = plt.subplots(2, 1, figsize=(12, 10))
     titles = ['HR@10 Across Epochs', 'NDCG@10 Across Epochs']
     models = ['MLP-4', 'NeuMF', 'GMF']
@@ -96,5 +97,5 @@ def draw(results):
         axes[i].grid(True, alpha=0.5)
 
     plt.tight_layout()
-    plt.savefig('./output/result.png')
+    plt.savefig(path)
     plt.show()
