@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from evaluate import *
 
 
-def model_train(config, num_of_negatives=4, preprocessed_filepath = "preprocessed_data/ml.pkl", batch_size=256, num_of_epochs=20, seed=2024):
+def model_train(config, num_of_negatives=4, preprocessed_filepath = "preprocessed_data/ml.pkl", batch_size=256, num_of_epochs=40, seed=2024):
     ####* set seed and device
     seed_everything(seed)
     device = (
