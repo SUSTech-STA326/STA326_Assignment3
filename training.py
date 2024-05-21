@@ -33,8 +33,8 @@ def train(model, name, train_loader, num_epochs=30, topk=10, lr=0.001):
             best_HR = HR
             best_NDCG = NDCG
             best_model_state = model.state_dict()
-    message = f"Training finish. Best HR@{topk}: {best_HR:.4f}, Best NDCG@{topk}: {best_NDCG:.4f}"
+    message = f"{name} training finish. Best HR@{topk}: {best_HR:.4f}, Best NDCG@{topk}: {best_NDCG:.4f}"
     print(message)
     with open('output.txt', 'a', encoding='utf-8') as file:
         file.write(message + '\n')
-    torch.save(best_model_state.state_dict(), f'./model/best_{name}.pth')
+    torch.save(best_model_state, f'./model/best_{name}.pth')

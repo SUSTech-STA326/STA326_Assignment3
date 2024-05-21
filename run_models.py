@@ -17,7 +17,7 @@ def seed_everything(seed):
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = True
         torch.backends.cudnn.enabled = True
-seed_everything(40)
+seed_everything(42)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -41,6 +41,6 @@ MLP_model = MLP(MLP_config).to(device)
 NeuMF_model = NeuMF(NeuMF_config).to(device)
 
 ## Training
-train(GMF_model, "GMF", train_loader, num_epochs=100)
-train(MLP_model, "MLP", train_loader, num_epochs=100)
-train(NeuMF_model, "NeuMF", train_loader, num_epochs=100)
+train(GMF_model, "GMF", train_loader, num_epochs=50)
+# train(MLP_model, "MLP", train_loader, num_epochs=50)
+# train(NeuMF_model, "NeuMF", train_loader, num_epochs=50)

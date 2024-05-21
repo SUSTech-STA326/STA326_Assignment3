@@ -1,0 +1,1 @@
+GMF training finish. Best HR@10: 0.6334, Best NDCG@10: 0.3635
