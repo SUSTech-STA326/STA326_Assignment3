@@ -22,8 +22,8 @@ This assignment focuses on implementing and comparing three recommender system m
 
 ## Usage
 
-To run the models, first configure the MODEL in config.py, which should be one of ["ml-1m_MLP", "ml-1m_GMF", "ml-1m_Neu_MF"]. 
-If MODEL == "ml-1m_MLP", you should further configure the MLP_LAYER, which should be an integer between 0 and 4. 
+To run the models, first configure the `MODEL` in `config.py`, which should be one of `["ml-1m_MLP", "ml-1m_GMF", "ml-1m_Neu_MF"]`. 
+If `MODEL == "ml-1m_MLP" `, you should further configure the `MLP_LAYER`, which should be an integer between `0` and `4`. 
 After configuration, run:
 ```
 python main.py
