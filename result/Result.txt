@@ -1,0 +1,7 @@
+NeuMF: Best epoch = 010, HR = 0.661, NDCG = 0.386
+GMF: Best epoch = 026, HR = 0.629, NDCG = 0.361
+MLP-4: Best epoch = 010, HR = 0.659, NDCG = 0.384
+MLP-3: Best epoch = 012, HR = 0.655, NDCG = 0.384
+MLP-2: Best epoch = 028, HR = 0.624, NDCG = 0.360
+MLP-1: Best epoch = 030, HR = 0.589, NDCG = 0.332
+MLP-0: Best epoch = 022, HR = 0.449, NDCG = 0.248
