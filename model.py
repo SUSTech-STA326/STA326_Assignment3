@@ -78,3 +78,20 @@ class RecommenderModel(nn.Module):
         output = self.sigmoid(vector)
         return output.squeeze(1)
         # return output
+        
+    def _init_weight_(self):
+        nn.init.normal_(self._embedding__user_gmf.weight, std=0.01)
+        nn.init.normal_(self._embedding__user_mlp.weight, std=0.01)
+        nn.init.normal_(self._embedding__item_gmf.weight, std=0.01)
+        nn.init.normal_(self._embedding__item_mlp.weight, std=0.01)
+
+        if self._X > 0:
+            for m in self._fc_layers:
+                if isinstance(m, nn.Linear):
+                    nn.init.xavier_uniform_(m.weight)
+        nn.init.kaiming_uniform_(self._out_fc.weight, a=1, nonlinearity='sigmoid')
+
+        for m in self.modules():
+            if isinstance(m, nn.Linear) and m.bias is not None:
+                m.bias.data.zero_()
+
