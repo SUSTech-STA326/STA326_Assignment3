@@ -45,6 +45,6 @@ def evaluate(model,topk):
         return ht / len(testloader.dataset), ndcg / len(testloader.dataset)
 
     test_dataset = testDataset(testRatings, testNegatives)
-    test_loader = DataLoader(dataset=test_dataset, batch_size=256, shuffle=False, num_workers=4)
+    test_loader = DataLoader(dataset=test_dataset, batch_size=256, shuffle=False, num_workers=2)
     hr, ndcg = HR_NDCG(test_loader)
     return hr, ndcg
