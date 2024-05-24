@@ -28,6 +28,24 @@ class NCF(nn.Module):
         
         self._activate1 = nn.Sigmoid()
         self._activate2 = nn.ReLU()
+        self._init_weight_()
+
+    def _init_weight_(self):
+        nn.init.normal_(self._embedding__user_gmf.weight, std=0.01)
+        nn.init.normal_(self._embedding__user_mlp.weight, std=0.01)
+        nn.init.normal_(self._embedding__item_gmf.weight, std=0.01)
+        nn.init.normal_(self._embedding__item_mlp.weight, std=0.01)
+
+        if self._X > 0:
+            for m in self._fc_layers:
+                if isinstance(m, nn.Linear):
+                    nn.init.kaiming_uniform_(m.weight, a=1, nonlinearity='relu')
+        nn.init.xavier_uniform_(self._out_fc.weight)
+
+        for m in self.modules():
+            if isinstance(m, nn.Linear) and m.bias is not None:
+                m.bias.data.zero_()
+
     def __repr__(self):
         return ""
     
@@ -63,6 +81,7 @@ class NeuMF(NCF):
     def __init__(self, config):
         NCF.__init__(self, config)
         self._neumf_fc = nn.Linear(self._factor*2, 1, bias=False)
+        nn.init.xavier_normal_(self._neumf_fc.weight)
     
     def forward(self, user_idx, item_idx):
         user_embedding_gmf = self._embedding__user_gmf(user_idx)
@@ -72,7 +91,7 @@ class NeuMF(NCF):
         user_embedding_mlp = self._embedding__user_mlp(user_idx)
         item_embedding_mlp = self._embedding__item_mlp(item_idx)
         vector_mlp = torch.cat([user_embedding_mlp, item_embedding_mlp], dim=-1)
-        
+
         if self._X > 0:
             for _, layer in enumerate(self._fc_layers):
                 vector_mlp = layer(vector_mlp)

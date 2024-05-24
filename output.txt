@@ -1,4 +1,8 @@
-GMF training finish. Best HR@10: 0.6364, Best NDCG@10: 0.3632
-MLP training finish. Best HR@10: 0.6219, Best NDCG@10: 0.3522
-NeuMF training finish. Best HR@10: 0.6397, Best NDCG@10: 0.3702
-
+GMF training finish. Best HR@10: 0.6366, Best NDCG@10: 0.3632
+MLP training finish. Best HR@10: 0.6502, Best NDCG@10: 0.3744
+NeuMF training finish. Best HR@10: 0.6594, Best NDCG@10: 0.3865
+MLP_0 training finish. Best HR@10: 0.4551, Best NDCG@10: 0.2530
+MLP_1 training finish. Best HR@10: 0.6070, Best NDCG@10: 0.3408
+MLP_2 training finish. Best HR@10: 0.6412, Best NDCG@10: 0.3703
+MLP_3 training finish. Best HR@10: 0.6520, Best NDCG@10: 0.3801
+MLP_4 training finish. Best HR@10: 0.6576, Best NDCG@10: 0.3848

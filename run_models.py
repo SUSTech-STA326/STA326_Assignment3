@@ -10,14 +10,13 @@ import numpy as np
 def seed_everything(seed):
     np.random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed(seed)
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = True
         torch.backends.cudnn.enabled = True
-seed_everything(42)
+# seed_everything(42)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -41,9 +40,9 @@ MLP_model = MLP(MLP_config).to(device)
 NeuMF_model = NeuMF(NeuMF_config).to(device)
 
 ## Training
-# train(GMF_model, "GMF", train_loader, num_epochs=100)
-# train(MLP_model, "MLP", train_loader, num_epochs=100)
-# train(NeuMF_model, "NeuMF", train_loader, num_epochs=100)
+train(GMF_model, "GMF", train_loader, num_epochs=100)
+train(MLP_model, "MLP", train_loader, num_epochs=100)
+train(NeuMF_model, "NeuMF", train_loader, num_epochs=100)
 
 ## MLP with different number of layers
 MLP_config_0 = {'num_users': num_users, 'num_items': num_items, 'factor': 8, 'layer_X': 0}
