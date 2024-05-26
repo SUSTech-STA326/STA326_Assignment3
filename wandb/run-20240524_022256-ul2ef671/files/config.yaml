@@ -1,0 +1,86 @@
+wandb_version: 1
+
+experiment_type:
+  desc: null
+  value: mlp
+alias:
+  desc: null
+  value: mlp_factor8neg4_layer2
+num_epoch:
+  desc: null
+  value: 100
+batch_size:
+  desc: null
+  value: 256
+optimizer:
+  desc: null
+  value: adam
+adam_lr:
+  desc: null
+  value: 0.001
+num_users:
+  desc: null
+  value: 6040
+num_items:
+  desc: null
+  value: 3706
+latent_dim_mlp:
+  desc: null
+  value: 4
+num_negative:
+  desc: null
+  value: 4
+layers:
+  desc: null
+  value:
+  - 8
+  - 16
+  - 8
+l2_regularization:
+  desc: null
+  value: 1.0e-07
+weight_init_gaussian:
+  desc: null
+  value: true
+use_cuda:
+  desc: null
+  value: true
+device_id:
+  desc: null
+  value: 0
+pretrain:
+  desc: null
+  value: false
+pretrain_mf:
+  desc: null
+  value: checkpoints/{}'.format('gmf_factor8neg4_Epoch100_HR0.6391_NDCG0.2852.model
+model_dir:
+  desc: null
+  value: checkpoints/{}_Epoch{}_HR{:.4f}_NDCG{:.4f}.model
+_wandb:
+  desc: null
+  value:
+    python_version: 3.9.18
+    cli_version: 0.17.0
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1716488576
+    t:
+      1:
+      - 1
+      - 55
+      - 105
+      2:
+      - 1
+      - 55
+      - 105
+      3:
+      - 16
+      - 23
+      4: 3.9.18
+      5: 0.17.0
+      8:
+      - 3
+      - 5
+      13: windows-amd64

@@ -1,0 +1,50 @@
+{
+    "os": "Windows-10-10.0.22631-SP0",
+    "python": "3.9.18",
+    "heartbeatAt": "2024-05-23T21:45:16.040603",
+    "startedAt": "2024-05-23T21:45:13.897928",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--config",
+        "config/mlp_factor8neg4_layer3.yaml"
+    ],
+    "state": "running",
+    "program": "D:\\SUSTECH\\CS\\Data Science Practice\\STA326_Assignment3\\train.py",
+    "codePathLocal": "train.py",
+    "codePath": "train.py",
+    "host": "\u5c0f\u65e5\u5b50\u8fc7\u5f97\u633a\u597d",
+    "username": "25540",
+    "executable": "D:\\Anaconda\\anaconda3\\envs\\dgl\\python.exe",
+    "cpu_count": 12,
+    "cpu_count_logical": 16,
+    "cpu_freq": {
+        "current": 2500.0,
+        "min": 0.0,
+        "max": 2500.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2500.0,
+            "min": 0.0,
+            "max": 2500.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 343.22753524780273,
+            "used": 337.41424560546875
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 2050",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 2050",
+            "memory_total": 4294967296
+        }
+    ],
+    "memory": {
+        "total": 15.730949401855469
+    }
+}
