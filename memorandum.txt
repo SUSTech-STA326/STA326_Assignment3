@@ -1,0 +1,16 @@
+loss function: BCELoss()，适用于处理二分类问题，要求输入是经过sigmoid之后的tensor
+在MLP中，我们更换了源代码的输入，源代码的数据是 num_users, num_items, layers = [20,10]
+，这里我们改成了num_users, num_items, factor, num_layers,由于采用的tower pattern,所以
+可以根据层数和factor数量推测整体的网络结构，比如factor = 8 num_layers = 3，网络的结构是
+[32,16,8],与之对应的embedding层的元素个数则是32/2=16个，则我们可以
+使用factor * 2**(num_layers)来确定bottom的神经元个数，embedding层的数量则是bottom/2(num_layers != 0)
+
+为了复现文中对于不同深度的MLP，我们对MLP模型进行了一些小修改，添加一些if去判断输入的num_layer是否为0，
+若为0则初始化MLP是Embedding层的输出为factor_num，这样可以满足在最后的Linear层的输入
+
+setting，在复现实验中，我们默认MLP的层数是3层，learning rate是0.001，设置dropout为0，epoch数量为20
+模型经过每个epoch训练，会在测试集上计算HR，NDCG
+
+HR：推荐列表中用户实际感兴趣（例如实际点击或购买）的项目所占的比例
+HR = 推荐列表中实际用户感兴趣的/测试集中用户感兴趣的项目总数
+NDCG = 归一化折扣累积增益
