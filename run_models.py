@@ -1,9 +1,18 @@
+"""
+Note!! To run this code, the data.zip folder needed to be unzip first.
+
+This code will train model GMF, MLP and neuMF, 
+then save the Models to folder 'checkpoints' and results(HR and NDCG as csv) to folder 'my_data_test'.
+The dataset used to train the models is Movielens dataset
+"""
+
 import pandas as pd
 import numpy as np
 from data import SampleGenerator
 from gmf import GMFEngine
 from mlp import MLPEngine
 from neumf import NeuMFEngine
+
 
 # use the same epoch num
 epoch = 50
@@ -100,6 +109,11 @@ print('Range of itemId is [{}, {}]'.format(ml1m_rating.itemId.min(), ml1m_rating
 # DataLoader for training and evaluation
 sample_generator = SampleGenerator(ratings=ml1m_rating)
 evaluate_data = sample_generator.evaluate_data
+
+
+"""
+Run GMF, MLP and neuMF sequentially
+"""
 
 ##############################################################################
 ################################### GMF ######################################
