@@ -31,7 +31,7 @@ This script will train the GMF, MLP, and NeuMF models on the MovieLens dataset a
 
 ## Evaluation
 
-After training, the models' performance can be evaluated by comparing HR@10 and NDCG@10 metrics. Additionally, you can reproduce the ablation study for the MLP model with different layers to observe the impact on performance.
+After training, the models' performance can be evaluated by comparing HR@10 and NDCG@10 metrics. Additionally, you can reproduce the ablation study for the MLP model zg
 
 ## Submission
 
