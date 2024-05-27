@@ -1,3 +1,8 @@
+# TO USE THE CODE
+First unzip data.zip to where it locats.
+Then run run_models.py. All configs can be modified at run_models too.
+Use plot.ipynb to make plots.
+
 # Some codes are cited from 
 Yihong Cheng, Qrh "neural-collaborative-filtering." https://github.com/yihong-chen/neural-collaborative-filtering
 
