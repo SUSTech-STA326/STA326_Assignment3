@@ -1,3 +1,14 @@
+# TO USE THE CODE
+## First unzip data.zip to where it locates.!!!!!!!!
+
+Then run run_models.py. All configs can be modified at run_models too.
+
+Use plot.ipynb to make plots.
+
+# Some codes are cited from 
+Yihong Cheng, Qrh "neural-collaborative-filtering." https://github.com/yihong-chen/neural-collaborative-filtering
+
+---
 
 # STA326 - Assignment 3
 
@@ -42,3 +53,5 @@ Submit your assignment by creating a pull request to the specified GitHub reposi
 ## References
 
 - He, Xiangnan, et al. "Neural collaborative filtering." Proceedings of the 26th international conference on world wide web. 2017.
+- Code ref: https://github.com/yihong-chen/neural-collaborative-filtering
+
