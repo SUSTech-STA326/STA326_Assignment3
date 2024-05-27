@@ -42,3 +42,5 @@ Submit your assignment by creating a pull request to the specified GitHub reposi
 ## References
 
 - He, Xiangnan, et al. "Neural collaborative filtering." Proceedings of the 26th international conference on world wide web. 2017.
+- Code ref: https://github.com/yihong-chen/neural-collaborative-filtering
+
