@@ -1,5 +1,5 @@
 # TO USE THE CODE
-First unzip data.zip to where it locates.!!!!!!!!
+## First unzip data.zip to where it locates.!!!!!!!!
 
 Then run run_models.py. All configs can be modified at run_models too.
 
