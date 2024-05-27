@@ -1,3 +1,5 @@
+# Some codes are cited from 
+Yihong Cheng, Qrh "neural-collaborative-filtering." https://github.com/yihong-chen/neural-collaborative-filtering
 
 # STA326 - Assignment 3
 
