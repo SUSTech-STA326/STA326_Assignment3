@@ -24,7 +24,7 @@ This assignment focuses on implementing and comparing three recommender system m
 
 To run the models, execute the command like:
 ```
-python run_models.py
+python main.py --batch_size=256 --lr=0.001 --factor_num=16
 ```
 
 This script will train the GMF, MLP, and NeuMF models on the MovieLens dataset and output the evaluation metrics HR@10 and NDCG@10 for each model.
