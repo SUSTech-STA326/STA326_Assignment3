@@ -1,4 +1,3 @@
-
 # STA326 - Assignment 3
 
 ## Overview
