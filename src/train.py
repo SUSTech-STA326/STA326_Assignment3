@@ -9,8 +9,11 @@ from data import SampleGenerator
 parser = argparse.ArgumentParser(description='Process some parameters.')
 parser.add_argument('--method', type=str, choices=['gmf','mlp','neumf'],required=True, help='Path to the dataset JSON file')
 parser.add_argument('--factor', type=int, choices=[8], required=True, help='factor')
+parser.add_argument('--layer', type=int, choices=[0,1,2,3,4], required=True, help='layer of mlp')
 parser.add_argument('--neg', type=int, choices=[0,1,2,3,4], required=True, help='neg')
 args = parser.parse_args()
+
+mlp_layers={0:[16],1:[16, 64],2:[16, 64, 32],3:[16, 64, 32, 16],4:[16, 64, 32, 16, 8]}
 
 gmf_config = {'alias': f"gmf_factor{args.factor}neg{args.neg}-implict",
               'num_epoch': 200,
@@ -43,7 +46,7 @@ mlp_config = {'alias': f"mlp_factor{args.factor}neg{args.neg}_bz256_166432168_pr
               'num_items': 3706,
               'latent_dim': args.factor ,
               'num_negative': args.neg ,
-              'layers': [16, 64, 32, 16],  # layers[0] is the concat of latent user vector & latent item vector
+              'layers': mlp_layers[args.layer],  # layers[0] is the concat of latent user vector & latent item vector
               'l2_regularization': 0.0000001,  # MLP model is sensitive to hyper params
               'weight_init_gaussian': True,
               'use_cuda': True,
